@@ -1,4 +1,4 @@
-# Terrain Atmospheric Intrinsic Decomposition (TAID)
+# Terrain Atmospheric Intrinsic Decomposition
 
 Minimal training and inference code for terrain intrinsic decomposition and
 atmospheric editing. This public release uses:
