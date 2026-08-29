@@ -141,25 +141,3 @@ python atmosphere/infer.py \
 
 Inputs and NPY outputs are linear. PNG values are interpreted as linear byte
 values; no gamma transfer is applied by the data loaders.
-
-## Reproducibility scope
-
-The public datasets intentionally use portable PNG/NPY payloads and do not
-contain every field from the internal training datasets:
-
-- `TAID-Dataset` includes the water/terrain/sky segmentation mask used for
-  conditioning and the water-specific loss. PNG quantization remains the main
-  data-format difference from the internal float tensor representation.
-- `TAID-AtmosEdit` stores `S/V` as linear PNG clipped to `[0, 1]`. The original
-  internal atmospheric dataset used float16 HDR tensors, including values above
-  one. The architecture and training procedure are reproduced, but exact
-  diff_ver4 weights cannot be regenerated from the clipped public payloads.
-
-These differences are explicit so results obtained from the public datasets are
-not presented as bitwise reproduction of the internal checkpoints.
-
-## Security
-
-Dataset NPY data is loaded with `allow_pickle=False`, and model checkpoints are
-loaded using PyTorch's `weights_only=True` mode. Authentication tokens are never
-stored in newly produced checkpoints.
