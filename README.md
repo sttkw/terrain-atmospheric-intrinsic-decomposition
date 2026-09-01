@@ -1,4 +1,8 @@
-# Terrain Atmospheric Intrinsic Decomposition
+# Atmosphere-Aware Intrinsic Decomposition from a Single Terrain Image with Latent Diffusion Models
+
+[Project Page](https://sttkw.github.io/terrain-atmospheric-Intrinsic-decomposition/)
+&nbsp;|&nbsp;
+[Paper](docs/static/pdf/paper.pdf)
 
 Minimal training and inference code for terrain intrinsic decomposition and
 atmospheric editing. This public release uses:
