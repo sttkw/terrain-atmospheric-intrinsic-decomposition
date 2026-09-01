@@ -141,3 +141,10 @@ python atmosphere/infer.py \
 
 Inputs and NPY outputs are linear. PNG values are interpreted as linear byte
 values; no gamma transfer is applied by the data loaders.
+
+## License
+
+The source code in this repository is licensed under the [MIT License](LICENSE).
+The `TAID-Dataset` and `TAID-AtmosEdit` datasets are separately licensed under
+the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/)
+(CC BY 4.0).
