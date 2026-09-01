@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Atmosphere-Aware Intrinsic Decomposition from a Single Terrain Image with Latent Diffusion Models. A latent diffusion-based framework that decomposes a single terrain image into albedo, diffuse shading, specular shading, and atmospheric volume components, and enables atmosphere-aware image editing.">
+  <meta name="keywords" content="Intrinsic image decomposition, atmospheric scattering, latent diffusion models, terrain images, image editing">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Atmosphere-Aware Intrinsic Decomposition from a Single Terrain Image with Latent Diffusion Models</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Atmosphere-Aware Intrinsic Decomposition from a Single
+            Terrain Image with Latent Diffusion Models</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              S. Tatsukawa<sup>1</sup>,</span>
+            <span class="author-block">
+              S. Sato<sup>1,2</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Hosei University, Japan,</span>
+            <span class="author-block"><sup>2</sup>Prometech CG Research, Japan</span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Pacific Graphics 2026 &middot; Conference Paper</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="./static/pdf/paper.pdf"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/sttkw/terrain-atmospheric-Intrinsic-decomposition"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Teaser. -->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img class="teaser-image" src="./static/images/teaser.png"
+           alt="Teaser: single terrain image decomposed into albedo, diffuse shading, specular shading, and volume, then recomposed with edited atmospheric conditions.">
+      <h2 class="subtitle has-text-centered">
+        Our method decomposes a single terrain image into <b>albedo</b>, <b>diffuse shading</b>,
+        <b>specular shading</b>, and an <b>atmospheric volume</b> component, and enables
+        atmosphere-aware editing such as fog density and light scattering.
+      </h2>
+    </div>
+  </div>
+</section>
+<!--/ Teaser. -->
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            We present a latent diffusion-based framework for atmosphere-aware intrinsic decomposition
+            from a single terrain image. In large-scale terrain scenes, atmospheric effects such as fog,
+            haze, and aerial perspective are strongly entangled with surface reflectance and shading,
+            making intrinsic decomposition highly ill-posed. Existing deep learning-based methods mainly
+            focus on albedo and shading estimation and do not explicitly model atmospheric scattering,
+            which often leads to degraded decomposition quality in outdoor scenes with large depth
+            variations. To address this problem, we propose a terrain-specific decomposition framework
+            that explicitly separates an input image into albedo, shading, and atmospheric volume
+            components. We construct a large-scale synthetic terrain dataset with ground-truth intrinsic
+            layers and train a latent diffusion model to estimate them from a single image. To improve
+            compositing consistency, our method incorporates constraints based on a renderer-pass-inspired
+            compositing equation during training and reconstruction guidance during inference.
+            Experimental results demonstrate that the proposed method enables more reliable decomposition
+            of terrain images and supports atmosphere-aware image editing.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <video autoplay muted loop playsinline controls class="teaser-image" style="border-radius: 10px;">
+          <source src="./static/videos/demo.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+
+<!-- Method Overview. -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Method Overview</h2>
+        <div class="content has-text-justified">
+          <p>
+            We explicitly separate a terrain image into albedo, diffuse/specular shading, and an
+            atmospheric volume component using a diffusion model trained with a compositing-equation
+            loss and reconstruction guidance. This yields reliable decomposition even for scenes with
+            fog and water, and further enables atmosphere-aware editing such as fog density and light
+            scattering.
+          </p>
+        </div>
+        <div class="figure-media-plain">
+          <img src="./static/images/pipeline.jpg" alt="Overview of our framework" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <span class="figure-fallback" style="display:none;">pipeline.jpg</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--/ Method Overview. -->
+
+
+<!-- Dataset. -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Synthetic Terrain Dataset</h2>
+        <div class="dataset-pipeline">
+          <div class="dataset-step">
+            <div class="dataset-step-title">Terrain Generation</div>
+            <div class="dataset-step-media">
+              <img src="./static/videos/1.gif" alt="Terrain Generation" onerror="this.style.display='none'">
+              <span class="dataset-step-fallback">1.gif</span>
+            </div>
+            <div class="dataset-step-caption">
+              Procedurally generates terrain using random fBm noise<sup>&#8251;</sup> as a height map
+            </div>
+          </div>
+          <div class="dataset-step">
+            <div class="dataset-step-title">Texture Assignment</div>
+            <div class="dataset-step-media">
+              <img src="./static/videos/2.gif" alt="Texture Assignment" onerror="this.style.display='none'">
+              <span class="dataset-step-fallback">2.gif</span>
+            </div>
+            <div class="dataset-step-caption">
+              Splits the terrain into four regions (e.g., cliffs and flat areas) based on the gradient,
+              and assigns a different texture to each
+            </div>
+          </div>
+          <div class="dataset-step">
+            <div class="dataset-step-title">Asset Scattering</div>
+            <div class="dataset-step-media">
+              <img src="./static/videos/3.gif" alt="Asset Scattering" onerror="this.style.display='none'">
+              <span class="dataset-step-fallback">3.gif</span>
+            </div>
+            <div class="dataset-step-caption">
+              Places vegetation, rocks, clouds, and water, with a seasonal parameter uniformly
+              controlling their textures
+            </div>
+          </div>
+          <div class="dataset-step">
+            <div class="dataset-step-title">Atmospheric Volume</div>
+            <div class="dataset-step-media">
+              <img src="./static/videos/4.gif" alt="Atmospheric Volume" onerror="this.style.display='none'">
+              <span class="dataset-step-fallback">4.gif</span>
+            </div>
+            <div class="dataset-step-caption">
+              Adopts a volume-based atmospheric scattering model, controlled via atmospheric density
+              parameters
+            </div>
+          </div>
+        </div>
+        <p class="is-size-7" style="color:#888; margin-top: 0.5rem;">
+          &#8251; fBm: fractional Brownian motion
+        </p>
+
+        <div class="content has-text-centered" style="margin-top: 2rem;">
+          <p class="is-size-6 has-text-weight-semibold">Public Datasets</p>
+          <div class="publication-links">
+            <span class="link-block">
+              <a href="https://huggingface.co/datasets/sttkw/TAID-Dataset"
+                 class="external-link button is-normal is-rounded is-dark">
+                <span class="icon"><i class="fas fa-database"></i></span>
+                <span>Decomposition Dataset (TAID-Dataset)</span>
+              </a>
+            </span>
+            <span class="link-block">
+              <a href="https://huggingface.co/datasets/ShunTatsukawa/TAID-AtmosEdit"
+                 class="external-link button is-normal is-rounded is-dark">
+                <span class="icon"><i class="fas fa-database"></i></span>
+                <span>Atmosphere Editing Dataset (TAID-AtmosEdit)</span>
+              </a>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--/ Dataset. -->
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@inproceedings{tatsukawa2026atmosphere,
+  author    = {Tatsukawa, Shun and Sato, Syuhei},
+  title     = {{Atmosphere-Aware Intrinsic Decomposition from a Single Terrain Image with Latent Diffusion Models}},
+  booktitle = {Pacific Graphics 2026},
+  year      = {2026},
+  publisher = {The Eurographics Association},
+}</code></pre>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop content has-text-centered">
+    <h2 class="title is-5">Acknowledgments</h2>
+    <p>
+      This work was supported by JSPS KAKENHI JP23K28204, JP25K00154, and JST CREST JPMJCR2554.
+    </p>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/pdf/paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/sttkw/terrain-atmospheric-Intrinsic-decomposition" class="external-link">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            The source code of this page is adapted from the <a
+              href="https://github.com/nerfies/nerfies.github.io">Nerfies project page template</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
