@@ -1,6 +1,6 @@
 # Atmosphere-Aware Intrinsic Decomposition from a Single Terrain Image with Latent Diffusion Models
 
-[Project Page](https://sttkw.github.io/intrinsic/)
+[Project Page](https://sttkw.github.io/terrain-atmospheric-intrinsic-decomposition/)
 &nbsp;|&nbsp;
 [Paper](docs/static/pdf/paper.pdf)
 
