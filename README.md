@@ -10,6 +10,13 @@ atmospheric editing. This public release uses:
 - [`ShunTatsukawa/TAID-Dataset`](https://huggingface.co/datasets/ShunTatsukawa/TAID-Dataset)
 - [`ShunTatsukawa/TAID-AtmosEdit`](https://huggingface.co/datasets/ShunTatsukawa/TAID-AtmosEdit)
 
+Pretrained weights are on [`ShunTatsukawa/TAID-Models`](https://huggingface.co/ShunTatsukawa/TAID-Models):
+
+| File | Model |
+| --- | --- |
+| [`decomposition/`](https://huggingface.co/ShunTatsukawa/TAID-Models/tree/main/decomposition) | Intrinsic decomposition U-Net (step 18,000) |
+| [`atmosphere/terrain_difference.pt`](https://huggingface.co/ShunTatsukawa/TAID-Models/blob/main/atmosphere/terrain_difference.pt) | Atmospheric editor |
+
 The repository intentionally excludes cluster launch files, containers,
 experiments, ablations, evaluation dumps, optimizer snapshots, and generated
 outputs.
@@ -26,6 +33,34 @@ pip install -r requirements.txt
 
 Both datasets and the InstructPix2Pix base model are public, so an HF token is
 not normally required. Set `HF_TOKEN` only if your environment requires one.
+
+## Quick start
+
+`demo.py` downloads the pretrained weights, decomposes a terrain photo, and
+edits its atmosphere:
+
+```bash
+python demo.py \
+  --input_image demo_image/2.jpg \
+  --water_mask demo_image/2.png \
+  --p_control 0 -3 0 \
+  --output_dir outputs/demo/2
+```
+
+`demo_image/<n>.jpg` are sRGB photos and `demo_image/<n>.png` their one-hot
+water/terrain/sky masks (`--water_mask` is optional). `--p_control` is the
+log-scale change of air, aerosol and ozone density: `0` keeps a parameter,
+negative values thin it and positive values thicken it (range `[-3, 3]`).
+
+Results are written as linear EXR plus gamma-2.2 PNG:
+
+```text
+outputs/demo/2/decomposition/{albedo,diffuse_shading,specular_shading,volume,reconstruction}
+outputs/demo/2/atmosphere/{diffuse_shading,specular_shading,volume,edited}
+```
+
+`edited` is the recomposed image `A * D' + S' + V'`. A GPU with about 24 GB is
+recommended for the decomposition step.
 
 ## 1. Intrinsic decomposition
 
@@ -116,17 +151,30 @@ input  = [D, S, V, broadcast(delta_log_parameters)]
 output = [delta_log_D, delta_log_S, delta_log_V]
 ```
 
+`TAID-AtmosEdit` stores 10,000 rows: one scene per `seed` (1..1000) with ten
+atmospheric conditions per scene (`p_idx` 0..9). `D` is a linear float32 HWC NPY
+in `[0, 5]`, `S` and `V` are linearly quantized 8-bit RGB PNG, and
+`s_density` / `s_aerosol` / `s_ozone` are the atmospheric parameters. Each
+training sample pairs two conditions of the same scene, so the editor only ever
+sees the atmosphere change, never a change of terrain.
+
 ### Training
 
-Defaults reproduce the architecture and hyperparameters stored in
-`atmos/checkpoints/diff_ver4`: 512 px, base width 32, 100 epochs, batch size 24,
-cosine LR, `lambda_delta=0`, `lambda_x=1`, global spatial deltas, and bf16.
+The defaults reproduce the atmospheric editor used in the paper: 512 px, base
+width 32, 100 epochs, batch size 24, cosine LR from 1e-4, `lambda_delta=0`,
+`lambda_x=1`, global spatial deltas, and bf16. The split is seed-wise, so a
+validation scene never appears in training; `--seed 42 --val_ratio 0.1` holds
+out the same 100 of the 1,000 scene seeds as the published model.
 
 ```bash
 python atmosphere/train.py \
   --dataset ShunTatsukawa/TAID-AtmosEdit \
   --checkpoint_root outputs/atmosphere/checkpoints
 ```
+
+Each run writes to a new `diff_ver<N>` directory: the best-validation
+checkpoint, a snapshot every `--save_every` epochs, and `val_seeds.csv` with
+the held-out seeds. Per-epoch losses go to `--log_csv` and TensorBoard.
 
 ### Inference
 
