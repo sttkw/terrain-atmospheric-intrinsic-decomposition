@@ -9,8 +9,10 @@
     const oldBase = '/terrain-atmospheric-Intrinsic-decomposition';
     const newBase = '/terrain-atmospheric-intrinsic-decomposition';
     const path = window.location.pathname;
-    const suffix = path.startsWith(oldBase) ? path.slice(oldBase.length) : '';
-    window.location.replace(newBase + suffix + window.location.search + window.location.hash);
+    if (path.startsWith(oldBase)) {
+      const suffix = path.slice(oldBase.length);
+      window.location.replace(newBase + suffix + window.location.search + window.location.hash);
+    }
   </script>
 </head>
 <body>
