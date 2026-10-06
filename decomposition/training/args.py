@@ -307,8 +307,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--max_grad_norm",
         type=float,
-        default=0.0,
-        help="Gradient clipping norm.",
+        default=1.0,
+        help="Gradient clipping norm. Pass 0 to disable clipping.",
     )
     parser.add_argument(
         "--logging_dir",

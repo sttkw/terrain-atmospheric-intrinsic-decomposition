@@ -6,6 +6,7 @@ __pycache__/
 outputs/
 logs/
 wandb/
+slurm/
 *.pt
 *.pth
 *.ckpt

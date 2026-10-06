@@ -472,7 +472,9 @@ def main() -> None:
                 train_loss += avg_loss.item() / args.gradient_accumulation_steps
 
                 accelerator.backward(loss)
-                if accelerator.sync_gradients:
+                # clip_grad_norm_ with max_norm=0 scales every gradient to zero,
+                # so 0 has to mean "no clipping" rather than being passed through.
+                if accelerator.sync_gradients and args.max_grad_norm > 0:
                     accelerator.clip_grad_norm_(unet.parameters(), args.max_grad_norm)
                 optimizer.step()
                 lr_scheduler.step()
