@@ -37,7 +37,7 @@ from pipeline import (  # noqa: E402
     output_to_linear_components,
 )
 
-DEFAULT_MODEL_REPO = "ShunTatsukawa/TAID-Models"
+DEFAULT_MODEL_REPO = "sttkw/TAID-Models"
 
 
 def parse_args() -> argparse.Namespace:

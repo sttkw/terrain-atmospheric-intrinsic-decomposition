@@ -10,12 +10,12 @@ atmospheric editing. This public release uses:
 - [`ShunTatsukawa/TAID-Dataset`](https://huggingface.co/datasets/ShunTatsukawa/TAID-Dataset)
 - [`ShunTatsukawa/TAID-AtmosEdit`](https://huggingface.co/datasets/ShunTatsukawa/TAID-AtmosEdit)
 
-Pretrained weights are on [`ShunTatsukawa/TAID-Models`](https://huggingface.co/ShunTatsukawa/TAID-Models):
+Pretrained weights are on [`sttkw/TAID-Models`](https://huggingface.co/sttkw/TAID-Models):
 
 | File | Model |
 | --- | --- |
-| [`decomposition/`](https://huggingface.co/ShunTatsukawa/TAID-Models/tree/main/decomposition) | Intrinsic decomposition U-Net (step 18,000) |
-| [`atmosphere/terrain_difference.pt`](https://huggingface.co/ShunTatsukawa/TAID-Models/blob/main/atmosphere/terrain_difference.pt) | Atmospheric editor |
+| [`decomposition/`](https://huggingface.co/sttkw/TAID-Models/tree/main/decomposition) | Intrinsic decomposition U-Net (step 18,000) |
+| [`atmosphere/terrain_difference.pt`](https://huggingface.co/sttkw/TAID-Models/blob/main/atmosphere/terrain_difference.pt) | Atmospheric editor |
 
 The repository intentionally excludes cluster launch files, containers,
 experiments, ablations, evaluation dumps, optimizer snapshots, and generated
