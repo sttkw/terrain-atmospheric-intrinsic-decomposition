@@ -41,13 +41,13 @@ edits its atmosphere:
 
 ```bash
 python demo.py \
-  --input_image demo_image/2.jpg \
-  --water_mask demo_image/2.png \
+  --input_image demo_image/test1.jpg \
+  --water_mask demo_image/test1.png \
   --p_control 0 -3 0 \
-  --output_dir outputs/demo/2
+  --output_dir outputs/demo/test1
 ```
 
-`demo_image/<n>.jpg` are sRGB photos and `demo_image/<n>.png` their one-hot
+`demo_image/test<n>.jpg` are sRGB photos and `demo_image/test<n>.png` their one-hot
 water/terrain/sky masks (`--water_mask` is optional). `--p_control` is the
 log-scale change of air, aerosol and ozone density: `0` keeps a parameter,
 negative values thin it and positive values thicken it (range `[-3, 3]`).
@@ -55,8 +55,8 @@ negative values thin it and positive values thicken it (range `[-3, 3]`).
 Results are written as linear EXR plus gamma-2.2 PNG:
 
 ```text
-outputs/demo/2/decomposition/{albedo,diffuse_shading,specular_shading,volume,reconstruction}
-outputs/demo/2/atmosphere/{diffuse_shading,specular_shading,volume,edited}
+outputs/demo/test1/decomposition/{albedo,diffuse_shading,specular_shading,volume,reconstruction}
+outputs/demo/test1/atmosphere/{diffuse_shading,specular_shading,volume,edited}
 ```
 
 `edited` is the recomposed image `A * D' + S' + V'`. A GPU with about 24 GB is

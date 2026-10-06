@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Decompose a terrain photo and edit its atmosphere with the released weights.
 
-    python demo.py --input_image demo_image/2.jpg --water_mask demo_image/2.png \
-        --p_control 0 -3 0 --output_dir outputs/demo/2
+    python demo.py --input_image demo_image/test1.jpg --water_mask demo_image/test1.png \
+        --p_control 0 -3 0 --output_dir outputs/demo/test1
 
 Weights are downloaded from the Hugging Face model repo on first use.
 """
